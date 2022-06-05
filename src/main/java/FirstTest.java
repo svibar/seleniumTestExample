@@ -1,8 +1,11 @@
-import org.junit.jupiter.api.Test;
+
+
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
 
 import java.time.Duration;
 
@@ -18,6 +21,7 @@ public class FirstTest {
 
         driver.get("https://next.privat24.ua/money-transfer/card");
 
+        driver.manage().window().maximize();
 
         By cardNumber = By.xpath("//input[@data-qa-node='numberdebitSource']");
         By expDate = By.xpath("//input[@data-qa-node='expiredebitSource']");
@@ -33,7 +37,6 @@ public class FirstTest {
         By submitBtn = By.xpath("//button[@type='submit']");
 
 
-
         driver.findElement(cardNumber).sendKeys("4006895689048337");
         driver.findElement(expDate).sendKeys("1128");
         driver.findElement(cvv).sendKeys("111");
@@ -46,5 +49,18 @@ public class FirstTest {
         driver.findElement(toggleComment).click();
         driver.findElement(comment).sendKeys("test test test");
         driver.findElement(submitBtn).submit();
+
+        //System.out.println("Text:" + driver.findElement(By.xpath("//div[@data-qa-node='comment']")).getText());
+        Assert.assertEquals("test test test", driver.findElement(By.xpath("//div[@data-qa-node='comment']")).getText());
+        Assert.assertEquals("4006 8956 8904 8337", driver.findElement(By.xpath("//span[@data-qa-node='payer-card']")).getText());
+        Assert.assertEquals("400 UAH", driver.findElement(By.xpath("//div[@data-qa-node='payer-amount']")).getText());
+        Assert.assertEquals("104.41 UAH", driver.findElement(By.xpath("//div[@data-qa-node='payer-currency']")).getText());
+        Assert.assertEquals("FEDERICO STOJAN", driver.findElement(By.xpath("//div[@data-qa-node='receiver-name']")).getText());
+        Assert.assertEquals("4558 0328 5584 1715", driver.findElement(By.xpath("//span[@data-qa-node='receiver-card']")).getText());
+        Assert.assertEquals("400 UAH", driver.findElement(By.xpath("//div[@data-qa-node='receiver-amount']")).getText());
+        Assert.assertEquals("0 UAH", driver.findElement(By.xpath("//div[@data-qa-node='receiver-currency']")).getText());
+        Assert.assertEquals("504.41 UAH", driver.findElement(By.xpath("//div[@class='sc-chPdSV iiqwfv']")).getText());
+
+
     }
 }
